@@ -30,7 +30,11 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <Views:Joystick x:Name="joystick" Grid.Column="2" Grid.Row="1"/>
+                    <Views:Joystick x:Name="joystick" 
+                                    Grid.Column="2" 
+                                    Grid.Row="1"
+                                    Aileron="{Binding Aileron, Mode=OneWayToSource}"
+                                    Elevator="{Binding Elevator, Mode=OneWayToSource}" Margin="0.333,0.333,0,0.334" Grid.RowSpan="2"/>
 
                     <TextBlock
                                 Text="←throttle→"
@@ -40,7 +44,7 @@
                                 Grid.Column="0"
                                 Grid.Row="1"
                                 VerticalAlignment="Center"
-                                TextAlignment="Center"  HorizontalAlignment="Left">
+                                TextAlignment="Center" HorizontalAlignment="Left" >
                         <TextBlock.LayoutTransform>
                             <TransformGroup>
                                 <RotateTransform Angle="90"/>
@@ -48,7 +52,7 @@
                         </TextBlock.LayoutTransform>
                     </TextBlock>
 
-                    <Grid Grid.Column="1" Grid.Row="1">
+                    <Grid Grid.Column="1" Grid.Row="1" >
 
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -59,7 +63,7 @@
                                 FontSize="20"                                                       
                                 Height="auto"
                                 Width="40"                                                                                                                            
-                                Grid.Column="1"
+                                Grid.Row="0"
                                 VerticalAlignment="Center"
                                 TextAlignment="Center"/>
                         <Slider Name="throttleSlider"
@@ -70,7 +74,9 @@
                                 Maximum="1"
                                 Orientation="Vertical" 
                                 TickPlacement="BottomRight"
-                                TickFrequency="0.1" LargeChange="0.1"/>
+                                TickFrequency="0.1" 
+                                LargeChange="0.1"
+                                Value="{Binding Throttle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </Grid>
                     <Grid Grid.Column="3" Grid.Row="1">
 
@@ -102,7 +108,7 @@
                             </TextBlock.LayoutTransform>
                         </TextBlock>
                     </Grid>
-                    <Grid Grid.Column="2" Grid.Row="0">
+                    <Grid Grid.Column="2" Grid.Row="0" >
 
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
@@ -126,7 +132,7 @@
                                 TextAlignment="Center"/>
                     </Grid>
 
-                    <Grid Grid.Row="2" Grid.Column="2">
+                    <Grid Grid.Row="2" Grid.Column="2" >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
@@ -137,10 +143,10 @@
                                 Height="Auto"
                                 Maximum="1"
                                 Minimum="-1"
-                                Value="0"
                                 Orientation="Horizontal"
                                 TickPlacement="BottomRight"
-                                TickFrequency="0.1" LargeChange="0.1"/>
+                                TickFrequency="0.1" LargeChange="0.1"
+                                Value="{Binding Rudder, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         <TextBlock
                                 Text="{Binding ElementName=rudderSlider, Path=Value, StringFormat={}{0:0.0}}"
                                 FontSize="20"                                                       
@@ -156,8 +162,8 @@
                                 Height="auto"
                                 Width="auto"                                                                                                                            
                                 Grid.Column="2"
-                                Grid.Row="3"
-                                VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                Grid.Row="4"
+                                VerticalAlignment="Center" HorizontalAlignment="Center" Margin="137.333,0,138,-0.333"/>
 
                 </Grid>
 
@@ -192,7 +198,15 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Button Content="Connect" Grid.Column="0" Width="70" Height="30" HorizontalAlignment="Right" Margin="0,0,20,0" Foreground="Black" Background="#FFB9D5FF"/>
+                <Button Content="Connect"
+                        Grid.Column="0" 
+                        Width="70"
+                        Height="30" 
+                        HorizontalAlignment="Left"
+                        Margin="149,0,0,0"
+                        Foreground="Black"
+                        Background="#FFB9D5FF"
+                        Command="{Binding ConnectCommand}"/>
                 <Button Content="Settings"
                         Grid.Column="1"
                         Width="70"
