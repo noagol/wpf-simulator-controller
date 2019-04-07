@@ -35,7 +35,7 @@ namespace FlightSimulator.ViewModels.Windows
         }
         #endregion
 
-        #region OpenSettingsCommand
+        #region ConnectCommand
         private ICommand _connectCommand;
         public ICommand ConnectCommand
         {

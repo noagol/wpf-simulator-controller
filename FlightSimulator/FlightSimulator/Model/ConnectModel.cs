@@ -23,10 +23,12 @@ namespace FlightSimulator.Model
 
         public ConnectModel()
         {
-            shouldStop = false;            commandsQueue = new Queue<string>();
+            shouldStop = false;
+            commandsQueue = new Queue<string>();
             throttle = 0.0f;
 
-            Thread thread = new Thread(new ThreadStart(updateSimulator));            thread.Start();
+            Thread thread = new Thread(new ThreadStart(updateSimulator));
+            thread.Start();
         }
 
         public float Throttle
@@ -86,7 +88,6 @@ namespace FlightSimulator.Model
                 if (commandsQueue.Count != 0)
                 {
                     using (NetworkStream stream = new NetworkStream(client.Client, false))
-                    using (BinaryReader reader = new BinaryReader(stream))
                     using (BinaryWriter writer = new BinaryWriter(stream))
                     {
                         while(commandsQueue.Count != 0)
