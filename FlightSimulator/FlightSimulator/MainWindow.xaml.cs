@@ -22,10 +22,13 @@ namespace FlightSimulator
     {
         private MainWindowViewModel vm;
 
+        /// <summary>Initializes a new instance of the <see cref="MainWindow"/> class.</summary>
         public MainWindow()
         {
             InitializeComponent();
+            // Initiaize view model
             vm = new MainWindowViewModel();
+            // Set data context
             this.DataContext = vm;
         }
     }

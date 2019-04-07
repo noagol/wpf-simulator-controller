@@ -21,11 +21,15 @@ namespace FlightSimulator.Views.Windows
     {
         private SettingsWindowViewModel vm;
 
+        /// <summary>Initializes a new instance of the <see cref="Settings"/> class.</summary>
         public Settings()
         {
             InitializeComponent();
+            // Initialize view model
             vm = new SettingsWindowViewModel();
+            // Set data context
             this.DataContext = vm;
+            // Enable close view from view model
             if (vm.CloseAction == null)
                 vm.CloseAction = new Action(() => this.Close());
         }
