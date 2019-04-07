@@ -67,7 +67,8 @@ namespace FlightSimulator.Model
 
         private void startServer()
         {
-            IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 5400);
+            IPEndPoint ep = new IPEndPoint(IPAddress.Parse(Properties.Settings.Default.FlightServerIP),
+                                                    Properties.Settings.Default.FlightInfoPort);
             TcpListener server = new TcpListener(ep);
 
             server.Start();
@@ -80,7 +81,7 @@ namespace FlightSimulator.Model
 
 
             string inputLine;
-            string[] splitted;   
+            string[] splitted;
 
             while (!shouldStop)
             {

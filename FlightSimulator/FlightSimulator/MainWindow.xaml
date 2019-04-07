@@ -10,33 +10,40 @@
         Title="Flight Simulator" Height="600" Width="1000">
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <TabControl Grid.Column="1">
-            <TabItem Header="Manual" >
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Text="Flight Simulator" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#FF91A8F3"/>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
 
-                    <Views:Joystick x:Name="joystick" 
+            <TabControl Grid.Column="1">
+                <TabItem Header="Manual" >
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Views:Joystick x:Name="joystick" 
                                     Grid.Column="2" 
                                     Grid.Row="1"
                                     Aileron="{Binding Aileron, Mode=OneWayToSource}"
                                     Elevator="{Binding Elevator, Mode=OneWayToSource}" Margin="0.333,0.333,0,0.334" Grid.RowSpan="2"/>
 
-                    <TextBlock
+                        <TextBlock
                                 Text="←throttle→"
                                 FontSize="20"                                                       
                                 Height="auto"
@@ -45,20 +52,20 @@
                                 Grid.Row="1"
                                 VerticalAlignment="Center"
                                 TextAlignment="Center" HorizontalAlignment="Left" >
-                        <TextBlock.LayoutTransform>
-                            <TransformGroup>
-                                <RotateTransform Angle="90"/>
-                            </TransformGroup>
-                        </TextBlock.LayoutTransform>
-                    </TextBlock>
+                            <TextBlock.LayoutTransform>
+                                <TransformGroup>
+                                    <RotateTransform Angle="90"/>
+                                </TransformGroup>
+                            </TextBlock.LayoutTransform>
+                        </TextBlock>
 
-                    <Grid Grid.Column="1" Grid.Row="1" >
+                        <Grid Grid.Column="1" Grid.Row="1" >
 
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <TextBlock
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock
                                 Text="{Binding ElementName=throttleSlider, Path=Value, StringFormat={}{0:0.0}}"
                                 FontSize="20"                                                       
                                 Height="auto"
@@ -66,7 +73,7 @@
                                 Grid.Row="0"
                                 VerticalAlignment="Center"
                                 TextAlignment="Center"/>
-                        <Slider Name="throttleSlider"
+                            <Slider Name="throttleSlider"
                                 Grid.Row="1"
                                 Width="Auto"
                                 Height="Auto"
@@ -77,14 +84,14 @@
                                 TickFrequency="0.1" 
                                 LargeChange="0.1"
                                 Value="{Binding Throttle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                    </Grid>
-                    <Grid Grid.Column="3" Grid.Row="1">
+                        </Grid>
+                        <Grid Grid.Column="3" Grid.Row="1">
 
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <TextBlock
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock
                                 Text="{Binding ElementName=joystick, Path=Elevator, StringFormat={}{0:0.0}}"
                                 FontSize="20"                                                       
                                 Height="auto"
@@ -92,7 +99,7 @@
                                 Grid.Row="0"
                                 VerticalAlignment="Center"
                                 TextAlignment="Center"/>
-                        <TextBlock
+                            <TextBlock
                                 Text="←elevator→"
                                 FontSize="20"                                                       
                                 Height="auto"
@@ -101,20 +108,20 @@
                                 Grid.Row="1"
                                 VerticalAlignment="Center"
                                 TextAlignment="Center"  HorizontalAlignment="Center">
-                            <TextBlock.LayoutTransform>
-                                <TransformGroup>
-                                    <RotateTransform Angle="90"/>
-                                </TransformGroup>
-                            </TextBlock.LayoutTransform>
-                        </TextBlock>
-                    </Grid>
-                    <Grid Grid.Column="2" Grid.Row="0" >
+                                <TextBlock.LayoutTransform>
+                                    <TransformGroup>
+                                        <RotateTransform Angle="90"/>
+                                    </TransformGroup>
+                                </TextBlock.LayoutTransform>
+                            </TextBlock>
+                        </Grid>
+                        <Grid Grid.Column="2" Grid.Row="0" >
 
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock
                                 Text="←aileron→"
                                 FontSize="20"                                                       
                                 Height="auto"
@@ -122,7 +129,7 @@
                                 Grid.Column="0"
                                 VerticalAlignment="Center"
                                 TextAlignment="Center"/>
-                        <TextBlock
+                            <TextBlock
                                 Text="{Binding ElementName=joystick, Path=Aileron, StringFormat={}{0:0.0}}"
                                 FontSize="20"                                                       
                                 Height="auto"
@@ -130,14 +137,14 @@
                                 Grid.Column="1"
                                 VerticalAlignment="Center"
                                 TextAlignment="Center"/>
-                    </Grid>
+                        </Grid>
 
-                    <Grid Grid.Row="2" Grid.Column="2" >
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <Slider Name="rudderSlider"
+                        <Grid Grid.Row="2" Grid.Column="2" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Slider Name="rudderSlider"
                                 Grid.Column="0"
                                 Width="Auto" 
                                 Height="Auto"
@@ -147,7 +154,7 @@
                                 TickPlacement="BottomRight"
                                 TickFrequency="0.1" LargeChange="0.1"
                                 Value="{Binding Rudder, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        <TextBlock
+                            <TextBlock
                                 Text="{Binding ElementName=rudderSlider, Path=Value, StringFormat={}{0:0.0}}"
                                 FontSize="20"                                                       
                                 Height="auto"
@@ -155,8 +162,8 @@
                                 Grid.Column="1"
                                 VerticalAlignment="Top"
                                 TextAlignment="Center" Margin="10,0,0,0"/>
-                    </Grid>
-                    <TextBlock
+                        </Grid>
+                        <TextBlock
                                 Text="←rudder→"
                                 FontSize="20"                                                       
                                 Height="auto"
@@ -165,42 +172,77 @@
                                 Grid.Row="4"
                                 VerticalAlignment="Center" HorizontalAlignment="Center" Margin="137.333,0,138,-0.333"/>
 
-                </Grid>
-
-            </TabItem>
-            <TabItem Header="Auto Pilot">
-                <Grid >
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height=".9*" />
-                        <RowDefinition Height=".1*"/>
-                    </Grid.RowDefinitions>
-                    <TextBox TextWrapping="Wrap" AcceptsReturn="True" Grid.Row="0"/>
-                    <Grid Grid.Row="1">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Button Content="OK" Grid.Column="0" Width="70" Height="30" HorizontalAlignment="Right" Margin="0,0,20,0" Foreground="Black" Background="#FFB9D5FF"/>
-                        <Button Content="Clear" Grid.Column="1" Width="70" Height="30" HorizontalAlignment="Left" Margin="20,0,0,0" Background="#FFB9D5FF"/>
-
                     </Grid>
-                </Grid>
-            </TabItem>
-        </TabControl>
-        <Grid Margin="10">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <Views:FlightBoard 
+
+                </TabItem>
+                <TabItem Header="Auto Pilot">
+                    <Grid >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height=".9*" />
+                            <RowDefinition Height=".1*"/>
+                        </Grid.RowDefinitions>
+                        <TextBox Name="autoPilotTextbox"
+                             Text="{Binding AutoPilotText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                             TextWrapping="Wrap"
+                             AcceptsReturn="True"
+                             Grid.Row="0"
+                             Background="{Binding AutoPilotBackground, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <!--<TextBox.Background>
+                            <MultiBinding>
+                                <Binding ElementName="autoPilotTextbox"
+                                         Path="Text"
+                                         UpdateSourceTrigger="PropertyChanged"
+                                         Mode="OneWay"
+                                         Converter="{StaticResource textBoxConverter}"/>
+                                <Binding Path="AutoPilotBackground"
+                                         Mode="TwoWay"/>
+                            </MultiBinding>
+                        </TextBox.Background>-->
+                        <!--</TextBox>-->
+
+
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Button Content="OK"
+                                Grid.Column="0"
+                                Width="70"
+                                Height="30"
+                                HorizontalAlignment="Right"
+                                Margin="0,0,20,0"
+                                Foreground="Black"
+                                Background="#FFB9D5FF"
+                                Command="{Binding SendCommandsCommand}"
+                                />
+                            <Button Content="Clear"
+                                Grid.Column="1"
+                                Width="70"
+                                Height="30"
+                                HorizontalAlignment="Left"
+                                Margin="20,0,0,0"
+                                Background="#FFB9D5FF"
+                                Command="{Binding ClearCommand}"/>
+
+                        </Grid>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+            <Grid Margin="10" Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Views:FlightBoard 
                 Grid.Row="1"
                 />
-            <Grid Grid.Row="0" Margin="0,0,0,10">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Button Content="Connect"
+                <Grid Grid.Row="0" Margin="0,0,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Button Content="Connect"
                         Grid.Column="0" 
                         Width="70"
                         Height="30" 
@@ -209,7 +251,7 @@
                         Foreground="Black"
                         Background="#FFB9D5FF"
                         Command="{Binding ConnectCommand}"/>
-                <Button Content="Settings"
+                    <Button Content="Settings"
                         Grid.Column="1"
                         Width="70"
                         Height="30"
@@ -218,7 +260,9 @@
                         Background="#FFB9D5FF"
                         Command="{Binding OpenSettingsCommand}"/>
 
+                </Grid>
             </Grid>
         </Grid>
+
     </Grid>
 </Window>

@@ -6,12 +6,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using FlightSimulator.Views.Windows;
+using System.Windows.Media;
 
 namespace FlightSimulator.ViewModels.Windows
 {
     class MainWindowViewModel : BaseNotify
     {
         private ConnectModel cm;
+        private string _autoPilotText;
+        private Brush _autoPilotBackground;
 
         public MainWindowViewModel()
         {
@@ -49,7 +52,92 @@ namespace FlightSimulator.ViewModels.Windows
         {
             if (cm == null)
             {
+                // First connect
                 cm = new ConnectModel();
+            }
+            else if (!cm.IP.Equals(Properties.Settings.Default.FlightServerIP)
+                || !cm.Port.Equals(Properties.Settings.Default.FlightCommandPort))
+            {
+                // Values changed
+                // Stop running thread
+                cm.stop();
+                // Create new connect model
+                cm = new ConnectModel();
+            }
+        }
+        #endregion
+
+        #region ClearCommand
+        private ICommand _clearCommand;
+        public ICommand ClearCommand
+        {
+            get
+            {
+                return _clearCommand ?? (_clearCommand = new CommandHandler(() => OnClearCommand()));
+            }
+        }
+
+        private void OnClearCommand()
+        {
+            AutoPilotText = "";
+        }
+        #endregion
+
+        #region SendCommandsCommand
+        private ICommand _sendCommandsCommand;
+        public ICommand SendCommandsCommand
+        {
+            get
+            {
+                return _sendCommandsCommand ?? (_sendCommandsCommand = new CommandHandler(() => OnSendCommandsCommand()));
+            }
+        }
+
+        private void OnSendCommandsCommand()
+        {
+            if (cm != null && AutoPilotText != "")
+            {
+                string[] splitted = AutoPilotText.Split('\n');
+                foreach (string s in splitted)
+                {
+                    SetCommand setCommand = new SetCommand(s.Trim(), true);
+                    cm.addCommand(setCommand);
+                }
+                AutoPilotBackground = Brushes.White;
+            }
+        }
+
+        public string AutoPilotText
+        {
+            get
+            {
+                return _autoPilotText;
+            }
+            set
+            {
+                _autoPilotText = value;
+                if (value == "")
+                {
+                    AutoPilotBackground = Brushes.White;
+                }
+                else
+                {
+                    AutoPilotBackground = Brushes.LightPink;
+                }
+                NotifyPropertyChanged("AutoPilotText");
+            }
+        }
+
+        public Brush AutoPilotBackground
+        {
+            get
+            {
+                return _autoPilotBackground;
+            }
+            set
+            {
+                _autoPilotBackground = value;
+                NotifyPropertyChanged("AutoPilotBackground");
             }
         }
         #endregion
@@ -75,7 +163,8 @@ namespace FlightSimulator.ViewModels.Windows
 
         public float Rudder
         {
-            get {
+            get
+            {
                 if (cm != null)
                     return cm.Rudder;
                 else
@@ -93,7 +182,8 @@ namespace FlightSimulator.ViewModels.Windows
 
         public float Aileron
         {
-            get {
+            get
+            {
                 if (cm != null)
                     return cm.Aileron;
                 else
@@ -103,7 +193,7 @@ namespace FlightSimulator.ViewModels.Windows
             {
                 if (cm != null)
                 {
-                    cm.Aileron = value;
+                    cm.Aileron = value / 124.0f;
                     NotifyPropertyChanged("Aileron");
                 }
             }
@@ -122,7 +212,7 @@ namespace FlightSimulator.ViewModels.Windows
             {
                 if (cm != null)
                 {
-                    cm.Elevator = value;
+                    cm.Elevator = value / 124.0f;
                     NotifyPropertyChanged("Elevator");
                 }
             }

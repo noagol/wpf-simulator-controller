@@ -16,19 +16,33 @@ namespace FlightSimulator.Model
         private float rudder;
         private float aileron;
         private float elevator;
+        private string ip;
+        private int port;
+        private Thread thread;
 
-
-        private static bool shouldStop;
-        private static Queue<string> commandsQueue;
+        private bool shouldStop;
+        private Queue<SetCommand> commandsQueue;
 
         public ConnectModel()
         {
             shouldStop = false;
-            commandsQueue = new Queue<string>();
+            commandsQueue = new Queue<SetCommand>();
             throttle = 0.0f;
+            ip = Properties.Settings.Default.FlightServerIP;
+            port = Properties.Settings.Default.FlightCommandPort;
 
-            Thread thread = new Thread(new ThreadStart(updateSimulator));
+            thread = new Thread(new ThreadStart(updateSimulator));
             thread.Start();
+        }
+
+        public string IP
+        {
+            get { return ip; }
+        }
+
+        public int Port
+        {
+            get { return port; }
         }
 
         public float Throttle
@@ -71,15 +85,28 @@ namespace FlightSimulator.Model
             }
         }
 
+        public void stop()
+        {
+            shouldStop = true;
+            thread.Join();
+        }
+
         private void update(string path, float value)
         {
-            string command = String.Format("set {0} {1}\r\n", path, value);
+            string command = String.Format("set {0} {1}", path, value);
+            SetCommand setCommand = new SetCommand(command, false);
+            addCommand(setCommand);
+        }
+        
+        public void addCommand(SetCommand command)
+        {
+            command.Command += "\r\n";
             commandsQueue.Enqueue(command);
         }
 
-        private static void updateSimulator()
+        private void updateSimulator()
         {
-            IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 5402);
+            IPEndPoint ep = new IPEndPoint(IPAddress.Parse(IP), Port);
             TcpClient client = new TcpClient();
             client.Connect(ep);
 
@@ -92,11 +119,15 @@ namespace FlightSimulator.Model
                     {
                         while(commandsQueue.Count != 0)
                         {
-                            string command = commandsQueue.Dequeue();
-                            byte[] data = System.Text.Encoding.ASCII.GetBytes(command);
-                            Console.WriteLine(command);
+                            SetCommand command = commandsQueue.Dequeue();
+                            byte[] data = System.Text.Encoding.ASCII.GetBytes(command.Command);
+                            Console.WriteLine(command.Command);
                             writer.Write(data);
                             writer.Flush();
+                            if (command.ShouldDelay)
+                            {
+                                Thread.Sleep(2000);
+                            }
                         }
                     }
                 }
